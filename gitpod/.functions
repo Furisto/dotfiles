@@ -1,0 +1,15 @@
+# Execs into the ws-daemon
+function exec-ws-daemon() {
+    local daemon=$(kubectl get pods -o custom-columns=Name:.metadata.name | grep daemon)
+    if (( $(grep -c . <<<"$daemon") > 1 )); then
+      echo "More than one ws-daemon exists"
+      return
+    fi
+    kubectl exec -it $daemon ws-daemon -- sh
+}
+
+# Finds the instance id of a workspace
+function get-ws-instance-id() {
+    local workspaceId=$1
+    kubectl port-forward statefulset/mysql 3306:3306 &
+}

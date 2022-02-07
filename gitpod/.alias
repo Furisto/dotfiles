@@ -1,0 +1,2 @@
+alias gpgd="kubectl get pods | grep ws-daemon"
+alias gpgm="kubectl get pods | grep ws-manager"
