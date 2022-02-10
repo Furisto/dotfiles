@@ -1,15 +1,41 @@
-# Execs into the ws-daemon
-function exec-ws-daemon() {
-    local daemon=$(kubectl get pods -o custom-columns=Name:.metadata.name | grep daemon)
-    if (( $(grep -c . <<<"$daemon") > 1 )); then
-      echo "More than one ws-daemon exists"
+# Exec into ws-daemon
+function exec-daemon() {
+    local daemon=$(kubectl get pods -o custom-columns=Name:.metadata.name | grep ws-daemon)
+    if [ -z "$daemon" ]; then
+      echo "ws-daemon not found"
       return
     fi
-    kubectl exec -it $daemon ws-daemon -- sh
+
+    if (( $(grep -c . <<< "$daemon") > 1 )); then
+      readarray -t instances <<< "$daemon"
+      select i in "${instances[@]}"
+      do
+        kubectl exec -it "$i" -c ws-daemon -- sh -c "cd /mnt/workingarea;sh"
+        return
+      done
+      return 
+    fi
+
+    kubectl exec -it "$daemon" -c ws-daemon -- sh "cd /mnt/workingarea;sh"
 }
 
-# Finds the instance id of a workspace
-function get-ws-instance-id() {
-    local workspaceId=$1
-    kubectl port-forward statefulset/mysql 3306:3306 &
+# Exec into host
+function exec-host() {
+    local daemon=$(kubectl get pods -o custom-columns=Name:.metadata.name | grep ws-daemon)
+    if [ -z "$daemon" ]; then
+      echo "ws-daemon not found"
+      return
+    fi
+
+    if (( $(grep -c . <<< "$daemon") > 1 )); then
+      readarray -t instances <<< "$daemon"
+      select i in "${instances[@]}"
+      do
+        kubectl exec -it "$i" -c ws-daemon -- sh -c "nsenter -t 1 -p -u -m -n bash"
+        return
+      done
+      return 
+    fi
+
+    kubectl exec -it "$daemon" -c ws-daemon -- sh "nsenter -t 1 -p -u -m -n bash"
 }
