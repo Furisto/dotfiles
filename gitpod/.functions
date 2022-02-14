@@ -39,3 +39,24 @@ function exec-host() {
 
     kubectl exec -it "$daemon" -c ws-daemon -- sh "nsenter -t 1 -p -u -m -n bash"
 }
+
+# Get daemon logs
+function log-daemon() {
+    local daemon=$(kubectl get pods -o custom-columns=Name:.metadata.name | grep ws-daemon)
+    if [ -z "$daemon" ]; then
+      echo "ws-daemon not found"
+      return
+    fi
+
+    if (( $(grep -c . <<< "$daemon") > 1 )); then
+      readarray -t instances <<< "$daemon"
+      select i in "${instances[@]}"
+      do
+        kubectl logs "$i" -c ws-daemon
+        return
+      done
+      return
+    fi
+
+    kubectl log "$daemon" -c ws-daemon
+}
