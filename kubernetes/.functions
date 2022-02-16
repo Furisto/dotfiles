@@ -1,0 +1,12 @@
+function node-pods() {
+  kubectl get pods --all-namespaces --field-selector spec.nodeName="$1" --sort-by=.metadata.namespace
+}
+
+function node-pod-count() {
+  kubectl get pods -o wide --all-namespaces --sort-by=.spec.nodeName -o custom-columns=:.spec.nodeName  | grep "\S" | uniq -c | sort -nr -k1,1 
+}
+
+function failed-pods() {
+  kubectl get pods --all-namespaces --field-selector status.phase=Failed \
+  -o custom-columns=NAMESPACE:.metadata.namespace,NAME:.metadata.name,REASON:.status.reason
+}
