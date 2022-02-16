@@ -1,5 +1,10 @@
 # Exec into ws-daemon
 function exec-daemon() {
+    if [ ! -z "$1" ]; then
+      kubectl exec -it "$1" -c ws-daemon -- sh -c "cd /mnt/workingarea;sh"
+      return
+    fi
+
     local daemon=$(kubectl get pods -o custom-columns=Name:.metadata.name | grep ws-daemon)
     if [ -z "$daemon" ]; then
       echo "ws-daemon not found"
@@ -59,17 +64,4 @@ function log-daemon() {
     fi
 
     kubectl log "$daemon" -c ws-daemon
-}
-
-function node-pods() {
-  kubectl get pods --all-namespaces --field-selector spec.nodeName="$1" --sort-by=.metadata.namespace
-}
-
-function node-pod-count() {
-  kubectl get pods -o wide --all-namespaces --sort-by=.spec.nodeName -o custom-columns=:.spec.nodeName  | grep "\S" | uniq -c | sort -nr -k1,1 
-}
-
-function failed-pods() {
-  kubectl get pods --all-namespaces --field-selector status.phase=Failed \
-  -o custom-columns=NAMESPACE:.metadata.namespace,NAME:.metadata.name,REASON:.status.reason
 }
