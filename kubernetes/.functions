@@ -1,12 +1,18 @@
+# Shows all pods running on a node
+# Usage: node pods <nodeName>
 function node-pods() {
-  kubectl get pods --all-namespaces --field-selector spec.nodeName="$1" --sort-by=.metadata.namespace
+  kubectl get pods --all-namespaces --field-selector spec.nodeName="$1" --sort-by=.metadata.namespace "${@:2}"
 }
 
+# Shows how many pods are running on each node in the cluster
+# Usage: node-pod-count
 function node-pod-count() {
   kubectl get pods -o wide --all-namespaces --sort-by=.spec.nodeName -o custom-columns=:.spec.nodeName  | grep "\S" | uniq -c | sort -nr -k1,1 
 }
 
+# Shows all failed pods in the cluster and the reason for the failure (if a failure reason has been recorded)
+# Usage: failed-pods
 function failed-pods() {
   kubectl get pods --all-namespaces --field-selector status.phase=Failed \
-  -o custom-columns=NAMESPACE:.metadata.namespace,NAME:.metadata.name,REASON:.status.reason
+  -o custom-columns=NAMESPACE:.metadata.namespace,NAME:.metadata.name,REASON:.status.reason "$@"
 }
