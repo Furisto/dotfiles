@@ -1,2 +1,4 @@
-alias gpgd="kubectl get pods | grep ws-daemon"
-alias gpgm="kubectl get pods | grep ws-manager"
+alias get-daemon="kubectl get pods -l component=ws-daemon"
+alias get-manager="kubectl get pods -l component=ws-manager"
+alias get-ws="kubectl get pods -l workspaceType=regular"
+alias get-prebuild="kubectl get pods -l workspaceType=prebuild"
