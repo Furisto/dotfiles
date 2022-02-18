@@ -65,3 +65,7 @@ function log-daemon() {
 
     kubectl log "$daemon" -c ws-daemon
 }
+
+function tail-prebuild() {
+  kubectl exec -it "$1" -- tail -f /workspace/.gitpod/prebuild-log-0
+}
