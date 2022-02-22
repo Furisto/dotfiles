@@ -6,3 +6,5 @@ alias get-smith="kubectl get pods -l component=agent-smith --sort-by=.metadata.c
 alias get-reg="kubectl get pods -l component=registry-facade --sort-by=.metadata.creationTimestamp"
 alias get-proxy="kubectl get pods -l component=ws-proxy --sort-by=.metadata.creationTimestamp"
 alias get-blob="kubectl get pods -l component=blobserve --sort-by=.metadata.creationTimestamp"
+
+alias kfo="kubens | grep fo"
