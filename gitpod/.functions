@@ -47,6 +47,11 @@ function exec-host() {
 
 # Get daemon logs
 function log-daemon() {
+    if [ ! -z "$1" ]; then
+      kubectl logs "$1" -c ws-daemon
+      return
+    fi
+
     local daemon=$(kubectl get pods -o custom-columns=Name:.metadata.name | grep ws-daemon)
     if [ -z "$daemon" ]; then
       echo "ws-daemon not found"
@@ -63,7 +68,7 @@ function log-daemon() {
       return
     fi
 
-    kubectl log "$daemon" -c ws-daemon
+    kubectl logs "$daemon" -c ws-daemon
 }
 
 function tail-prebuild() {
