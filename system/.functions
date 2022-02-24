@@ -1,0 +1,9 @@
+# Extract tar archive
+function tarx() {
+    tar xvf "$1" "${@:2}"
+}
+
+# Make directory and change into it
+function mkd() {
+    mkdir "$1" && cd "$1"
+}
