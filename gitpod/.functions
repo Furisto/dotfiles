@@ -1,7 +1,7 @@
 # Exec into ws-daemon
 function exec-daemon() {
     if [ ! -z "$1" ]; then
-      kubectl exec -it "$1" -c ws-daemon -- sh -c "cd /mnt/workingarea;sh"
+      kubectl exec -it "$1" -c ws-daemon -- sh -c "cd /mnt/workingarea;bash"
       return
     fi
 
@@ -15,13 +15,13 @@ function exec-daemon() {
       readarray -t instances <<< "$daemon"
       select i in "${instances[@]}"
       do
-        kubectl exec -it "$i" -c ws-daemon -- sh -c "cd /mnt/workingarea;sh"
+        kubectl exec -it "$i" -c ws-daemon -- sh -c "cd /mnt/workingarea;bash"
         return
       done
       return 
     fi
 
-    kubectl exec -it "$daemon" -c ws-daemon -- sh "cd /mnt/workingarea;sh"
+    kubectl exec -it "$daemon" -c ws-daemon -- sh -c "cd /mnt/workingarea;bash"
 }
 
 # Exec into host
@@ -42,7 +42,7 @@ function exec-host() {
       return 
     fi
 
-    kubectl exec -it "$daemon" -c ws-daemon -- sh "nsenter -t 1 -p -u -m -n bash"
+    kubectl exec -it "$daemon" -c ws-daemon -- sh -c "nsenter -t 1 -p -u -m -n bash"
 }
 
 # Get daemon logs
