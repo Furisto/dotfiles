@@ -6,5 +6,6 @@ source ~/system/.alias
 source ~/gitpod/.functions
 source ~/kubernetes/.functions
 source ~/dev/.functions
+source ~/system/.functions
 
 source ~/kubernetes/.env
