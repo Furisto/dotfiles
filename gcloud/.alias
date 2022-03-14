@@ -1,2 +1,2 @@
-gcp-auth="gcloud auth login --no-launch-browser"
-gcp-auth-app="gcloud auth application-default login --no-launch-browser"
+alias gcp-auth="gcloud auth login --no-launch-browser"
+alias gcp-auth-app="gcloud auth application-default login --no-launch-browser"
