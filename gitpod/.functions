@@ -84,7 +84,7 @@ function log-smith() {
      return
   fi
 
-  log-component "agent-smith"g 
+  log-component "agent-smith"
 }
 
 # Get ws-manager logs
