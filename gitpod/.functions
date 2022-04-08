@@ -110,3 +110,19 @@ function log-reg() {
 function tail-prebuild() {
   kubectl exec -it "$1" -- tail -f /workspace/.gitpod/prebuild-log-0
 }
+
+function minio-login() {
+  local username=$(kubectl get secrets minio -o jsonpath="{.data.root-user}" | base64 -d)
+  local password=$(kubectl get secrets minio -o jsonpath="{.data.root-password}" | base64 -d)
+
+  echo "username: ${username}"
+  echo "password: ${password}"
+}
+
+function db-login() {
+  local username=$(kubectl get secrets mysql -o jsonpath="{.data.username}" | base64 -d)
+  local password=$(kubectl get secrets mysql -o jsonpath="{.data.password}" | base64 -d)
+
+  echo "username: ${username}"
+  echo "password: ${password}"
+}
