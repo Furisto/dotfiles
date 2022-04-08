@@ -126,3 +126,22 @@ function db-login() {
   echo "username: ${username}"
   echo "password: ${password}"
 }
+
+function forward-minio() {
+  local local_port=9001
+  if [ -n "$1" ]; then
+    local_port="$1"
+  fi
+
+  kubectl port-forward deploy/minio "$local_port":9001
+}
+
+function forward-db() {
+  local local_port=3306
+  if [ -n "$1" ]; then
+    local_port="$1"
+  fi
+
+  kubectl port-forward statefulset/mysql "$local_port":3306
+}
+
