@@ -14,3 +14,5 @@ alias restart-reg="kubectl rollout restart daemonset registry-facade"
 alias restart-proxy="kubectl rollout restart deployment ws-proxy"
 
 alias kfo="kubens | grep fo"
+
+alias stopping-ws="gpctl workspaces list | grep STOPPING | sort -nr -k1,1"
