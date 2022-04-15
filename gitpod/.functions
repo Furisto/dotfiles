@@ -145,3 +145,10 @@ function forward-db() {
   kubectl port-forward statefulset/mysql "$local_port":3306
 }
 
+function ssh-ws-node() {
+  gcloud config set project workspace-clusters
+  gcloud config unset compute/region
+  gcloud config unset compute/zone
+  gcloud compute ssh "$1" --ssh-flag="-p 2222"
+}
+
