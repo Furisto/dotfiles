@@ -17,3 +17,6 @@ alias restart-proxy="kubectl rollout restart deployment ws-proxy"
 alias kfo="kubens | grep fo"
 
 alias stopping-ws="gpctl workspaces list | grep STOPPING | sort -nr -k1,1"
+
+alias preview-ssh="/workspace/gitpod/dev/preview/ssh-vm.sh"
+alias preview-ctx="/workspace/gitpod/dev/preview/install-k3s-kubeconfig.sh"
