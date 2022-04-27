@@ -157,3 +157,20 @@ function preview-ctx() {
   kubectx k3s-preview-environment
 }
 
+
+function _pending-ws-impl() {
+  workspace_pods=$(kubectl get pods -l workspaceType=regular -o wide)
+  gpctl workspaces list | grep PENDING | while read workspace 
+  do 
+    workspace_id=$(echo "$workspace" | awk '{print  $3}')
+    owner=$(echo "$workspace" | awk '{print  $1}')
+    pod=$(echo "$workspace_pods" | grep "$workspace_id")
+    if [[ -n $pod ]];then
+      echo "$pod $owner"
+    fi
+  done
+}
+
+function pending-ws() {  
+  _pending-ws-impl | sort -k6 -h | column -t
+}
