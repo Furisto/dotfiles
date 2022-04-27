@@ -152,3 +152,8 @@ function ssh-ws-node() {
   gcloud compute ssh "$1" --ssh-flag="-p 2222"
 }
 
+function preview-ctx() {
+  /workspace/gitpod/dev/preview/install-k3s-kubeconfig.sh
+  kubectx k3s-preview-environment
+}
+
