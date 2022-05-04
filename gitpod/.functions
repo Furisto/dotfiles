@@ -174,3 +174,9 @@ function _pending-ws-impl() {
 function pending-ws() {  
   _pending-ws-impl | sort -k6 -h | column -t
 }
+
+function delete-ws() {
+  workspace_id=$1
+  kubectl patch pod $workspace_id --patch '{"metadata": { "finalizers": null }}' --type merge
+  kubectl delete pod $workspace_id
+}
