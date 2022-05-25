@@ -180,3 +180,7 @@ function delete-ws() {
   kubectl patch pod $workspace_id --patch '{"metadata": { "finalizers": null }}' --type merge
   kubectl delete pod $workspace_id
 }
+
+function node-ws-count() {
+  kubectl get pods -o wide -l workspaceType=regular --sort-by=.spec.nodeName -o custom-columns=:.spec.nodeName  | grep "\S" | uniq -c | sort -nr -k1,1
+}
