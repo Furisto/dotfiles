@@ -152,11 +152,24 @@ function ssh-ws-node() {
   gcloud compute ssh "$1" --ssh-flag="-p 2222"
 }
 
-function preview-ctx() {
-  /workspace/gitpod/dev/preview/install-k3s-kubeconfig.sh
-  kubectx k3s-preview-environment
+function preview-name-from-branch {
+    branch_name=$(git symbolic-ref HEAD 2>&1) || error "Cannot get current branch"
+    sanitizedd_branch_name=$(echo "$branch_name" | awk '{ sub(/^refs\/heads\//, ""); $0 = tolower($0); gsub(/[^-a-z0-9]/, "-"); print }')
+    length=$(echo -n "$sanitizedd_branch_name" | wc -c)
+
+    if [ "$length" -gt 20 ]; then
+        hashed=$(echo -n "${sanitizedd_branch_name}" | sha256sum)
+        echo "${sanitizedd_branch_name:0:10}${hashed:0:10}"
+    else
+        echo "${sanitizedd_branch_name}"
+    fi
 }
 
+function preview-ctx() {
+  /workspace/gitpod/dev/preview/install-k3s-kubeconfig.sh
+  branch_name=$(preview-name-from-branch)
+  kubectx "$branch_name"
+}
 
 function _pending-ws-impl() {
   workspace_pods=$(kubectl get pods -l workspaceType=regular -o wide)
