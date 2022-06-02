@@ -197,3 +197,15 @@ function delete-ws() {
 function node-ws-count() {
   kubectl get pods -o wide -l workspaceType=regular --sort-by=.spec.nodeName -o custom-columns=:.spec.nodeName  | grep "\S" | uniq -c | sort -nr -k1,1
 }
+
+function setup-loadgen() {
+  local cluster=$1
+
+  cd /workspace/gitpod/dev/loadgen && \
+  gcloud auth login --no-launch-browser && \
+  kubecdl -p workspace-clusters "$cluster" && \
+  kubectx "$cluster" && \
+  { kubectl port-forward deployment/ws-manager 12001:8080 & } && \
+  gpctl clusters get-tls-config && \
+  go build
+}
