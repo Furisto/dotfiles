@@ -209,3 +209,11 @@ function setup-loadgen() {
   gpctl clusters get-tls-config && \
   go build
 }
+
+function node-ws-count() {
+  kubectl get pods -o wide --sort-by=.spec.nodeName -o custom-columns=:.spec.nodeName --selector workspaceType=regular | grep "\S" | uniq -c | sort -nr -k1,1
+}
+
+function node-prebuild-count() {
+  kubectl get pods -o wide --sort-by=.spec.nodeName -o custom-columns=:.spec.nodeName --selector workspaceType=prebuild | grep "\S" | uniq -c | sort -nr -k1,1
+}
