@@ -23,5 +23,5 @@ alias stopping-ws="gpctl workspaces list | grep STOPPING | sort -nr -k1,1"
 
 alias preview-ssh="/workspace/gitpod/dev/preview/ssh-vm.sh"
 
-alias ws-overview="kubectl get pods -l workspaceType=regular --sort-by=.metadata.creationTimestamp -o custom-columns=NAME:.metadata.name,TYPE:.metadata.labels.workspaceType,CLASS:.metadata.labels."gitpod\.io/workspaceClass",NODE:.spec.nodeName,OWNER:.metadata.labels.owner,TEAM:.metadata.labels.team"
+alias ws-overview="kubectl get pods -l workspaceType=regular --sort-by=.metadata.creationTimestamp -o custom-columns=NAME:.metadata.name,TYPE:.metadata.labels.workspaceType,CLASS:.metadata.labels.'gitpod\.io/workspaceClass',NODE:.spec.nodeName,OWNER:.metadata.labels.owner,TEAM:.metadata.labels.team"
 
