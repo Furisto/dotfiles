@@ -1,0 +1,3 @@
+function slog() {
+    gcloud compute instances get-serial-port-output "$1" --port=1
+}
