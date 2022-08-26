@@ -10,3 +10,4 @@ source ~/dev/.functions
 source ~/system/.functions
 
 source ~/kubernetes/.env
+source ~/git/.run
