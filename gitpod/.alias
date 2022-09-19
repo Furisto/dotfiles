@@ -9,6 +9,7 @@ alias get-blob="kubectl get pods -l component=blobserve --sort-by=.metadata.crea
 alias get-image="kubectl get pods -l workspaceType=imagebuild --sort-by=.metadata.creationTimestamp"
 alias get-server="kubectl get pods -l component=server --sort-by=.metadata.creationTimestamp"
 alias get-me="kubectl get pods -l owner=${GP_USER_ID} --sort-by=.metadata.creationTimestamp"
+alias get-netlimit="kubectl get pods -o json| jq -r '.items[].metadata|select(.annotations.\"gitpod.io/netConnLimitPerMinute\")|.name'"
 
 alias restart-daemon="kubectl rollout restart daemonset ws-daemon"
 alias restart-manager="kubectl rollout restart deployment ws-manager"
