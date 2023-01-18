@@ -26,3 +26,8 @@ alias preview-ssh="/workspace/gitpod/dev/preview/ssh-vm.sh"
 
 alias ws-overview="kubectl get pods -l workspaceType=regular --sort-by=.metadata.creationTimestamp -o custom-columns=NAME:.metadata.name,TYPE:.metadata.labels.workspaceType,CLASS:.metadata.labels.'gitpod\.io/workspaceClass',NODE:.spec.nodeName,OWNER:.metadata.labels.owner,TEAM:.metadata.labels.team"
 
+
+alias get-crd="kubectl get workspace.workspace.gitpod.io"
+alias edit-crd="kubectl edit workspace.workspace.gitpod.io"
+alias desc-crd="kubectl describe workspace.workspace.gitpod.io"
+alias del-crd="kubectl delete workspace.workspace.gitpod.io"
