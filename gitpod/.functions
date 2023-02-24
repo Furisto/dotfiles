@@ -188,10 +188,16 @@ function pending-ws() {
   _pending-ws-impl | sort -k6 -h | column -t
 }
 
-function delete-ws() {
+function delete-ws-pod() {
   workspace_id=$1
   kubectl patch pod $workspace_id --patch '{"metadata": { "finalizers": null }}' --type merge
-  kubectl delete pod $workspace_id
+  kubectl delete pod $workspace_id --grace-period 0 
+}
+
+function delete-ws() {
+  workspace_id=$1
+  kubectl patch ws $workspace_id --patch '{"metadata": { "finalizers": null }}' --type merge
+  kubectl delete ws $workspace_id --grace-period 0
 }
 
 function node-ws-count() {
