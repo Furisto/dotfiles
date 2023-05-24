@@ -223,3 +223,12 @@ function node-ws-count() {
 function node-prebuild-count() {
   kubectl get pods -o wide --sort-by=.spec.nodeName -o custom-columns=:.spec.nodeName --selector workspaceType=prebuild | grep "\S" | uniq -c | sort -nr -k1,1
 }
+
+function ws-details() {
+  if [ -z "$1" ]; then
+    kubectl get pods --sort-by=.spec.nodeName  --selector=component=workspace -o jsonpath='{range .items[*]}{.metadata.labels.metaID}{"\t"}{.metadata.labels.owner}{"\t"}{.status.phase}{"\t"}{.metadata.name}{"\t\t"}{.spec.nodeName}{"\t"}{.spec.containers[].env[?(@.name=="GITPOD_GIT_USER_EMAIL")].value}{"\t"}{.spec.containers[].env[?(@.name=="GITPOD_WORKSPACE_CONTEXT_URL")].value}{"\n"}{end}' | column -t 
+    return
+  fi
+
+  kubectl get pods "$1" -o jsonpath='{.metadata.labels.metaID}{"\t"}{.metadata.labels.owner}{"\t"}{.status.phase}{"\t"}{.metadata.name}{"\t\t"}{.spec.nodeName}{"\t"}{.spec.containers[].env[?(@.name=="GITPOD_GIT_USER_EMAIL")].value}{"\t"}{"\t"}{.spec.containers[].env[?(@.name=="GITPOD_WORKSPACE_CONTEXT_URL")].value}{"\n"}'
+}
