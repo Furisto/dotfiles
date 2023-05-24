@@ -12,7 +12,7 @@ alias get-me="kubectl get pods -l owner=${GP_USER_ID} --sort-by=.metadata.creati
 alias get-netlimit="kubectl get pods -o json| jq -r '.items[].metadata|select(.annotations.\"gitpod.io/netConnLimitPerMinute\")|.name'"
 
 alias restart-daemon="kubectl rollout restart daemonset ws-daemon"
-alias restart-manager="kubectl rollout restart deployment ws-manager"
+alias restart-manager="kubectl rollout restart deployment ws-manager-mk2"
 alias restart-smith="kubectl rollout restart daemonset agent-smith"
 alias restart-reg="kubectl rollout restart daemonset registry-facade"
 alias restart-proxy="kubectl rollout restart deployment ws-proxy"
