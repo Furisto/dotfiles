@@ -28,3 +28,10 @@ alias ws-overview="kubectl get pods -l workspaceType=regular --sort-by=.metadata
 
 alias gh-login="gh auth login --with-token <<< $(curl --silent localhost:22999/_supervisor/v1/token/git/github.com/ | jq -r '.token')"
 alias gh-build="gh workflow run build.yml --ref $(git rev-parse --abbrev-ref HEAD)"
+
+alias cgim="subctl get installation meta -o yaml"
+alias cgiw="subctl get installation workspace -o yaml"
+alias cgcm="subctl get cluster meta -o yaml"
+alias ggcw="subctl get cluster workspace -o yaml"
+
+alias get-cell="subctl get cell -o yaml"
