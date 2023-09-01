@@ -35,3 +35,8 @@ alias cgcm="subctl get cluster meta -o yaml"
 alias ggcw="subctl get cluster workspace -o yaml"
 
 alias get-cell="subctl get cell -o yaml"
+alias get-install="subctl get installation -o yaml"
+alias get-release="subctl get release -o yaml"
+alias get-cluster="subctl get cluster -o yaml"
+alias get-channel="subctl get channel -o yaml"
+
