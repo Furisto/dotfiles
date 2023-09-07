@@ -32,9 +32,10 @@ alias gh-build="gh workflow run build.yml --ref $(git rev-parse --abbrev-ref HEA
 alias cgim="subctl get installation meta -o yaml"
 alias cgiw="subctl get installation workspace -o yaml"
 alias cgcm="subctl get cluster meta -o yaml"
-alias ggcw="subctl get cluster workspace -o yaml"
+alias cgcw="subctl get cluster workspace -o yaml"
 
 alias get-cell="subctl get cell -o yaml"
+alias get-infra="subctl get infra -o yaml"
 alias get-install="subctl get installation -o yaml"
 alias get-release="subctl get release -o yaml"
 alias get-cluster="subctl get cluster -o yaml"
