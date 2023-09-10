@@ -40,4 +40,6 @@ alias get-install="subctl get installation -o yaml"
 alias get-release="subctl get release -o yaml"
 alias get-cluster="subctl get cluster -o yaml"
 alias get-channel="subctl get channel -o yaml"
+alias nuke="nuke-account run --region eu-central-1"
+alias nukeit="nuke-account run --region eu-central-1 --dry-run=false"
 
