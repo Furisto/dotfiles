@@ -8,6 +8,7 @@ source ~/gitpod/.functions
 source ~/kubernetes/.functions
 source ~/dev/.functions
 source ~/system/.functions
+source ~/git/.functions
 
 source ~/kubernetes/.env
 source ~/git/.run

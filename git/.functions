@@ -1,0 +1,6 @@
+function rebase() {
+   git checkout main
+   git pull origin main
+   git checkout -
+   git rebase main
+}
