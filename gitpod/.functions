@@ -232,3 +232,7 @@ function ws-details() {
 
   kubectl get pods "$1" -o jsonpath='{.metadata.labels.metaID}{"\t"}{.metadata.labels.owner}{"\t"}{.status.phase}{"\t"}{.metadata.name}{"\t\t"}{.spec.nodeName}{"\t"}{.spec.containers[].env[?(@.name=="GITPOD_GIT_USER_EMAIL")].value}{"\t"}{"\t"}{.spec.containers[].env[?(@.name=="GITPOD_WORKSPACE_CONTEXT_URL")].value}{"\n"}'
 }
+
+function get-template() {
+  subctl get infra $1 -o yaml | yq .status.template
+}
