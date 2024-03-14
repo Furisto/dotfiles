@@ -236,3 +236,14 @@ function ws-details() {
 function get-template() {
   subctl get infra $1 -o yaml | yq .status.template
 }
+
+function inactive-pods() {
+    inactive_ws=$(kubectl get ws -o json | jq '[.items[] | select([.status.conditions[] | select(.reason == "MarkActiveRequest")] | length == 0)]' | jq -r .[].metadata.name | paste -sd "|" -)
+    kubectl get pods | grep -E $inactive_ws
+}
+
+function inactive-overview() {
+  (echo -e "workspaceInstanceId\tphase\temail\tnodeName\tpodname\tworkspaceName\towner\tgitContext" && kubectl get ws -o json | jq -r '.items[] | select([.status.conditions[] | select(.reason == "MarkActiveRequest")] | length == 0) | select(.spec.type == "Regular") | [.metadata.name, .status.phase, .spec.git.email, .status.runtime.nodeName, .status.runtime.podName, .spec.ownership.workspaceID, .spec.ownership.owner, ([.spec.userEnvVars[] | select(.name=="GITPOD_WORKSPACE_CONTEXT_URL") | .value] | join(", "))] | @tsv') | column -t -s $'\t'
+}
+
+

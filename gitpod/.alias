@@ -43,3 +43,6 @@ alias get-channel="subctl get channel -o yaml"
 alias nuke="nuke-account run --region eu-central-1"
 alias nukeit="nuke-account run --region eu-central-1 --dry-run=false"
 
+alias inactive-ws="kubectl get ws -o json | jq '[.items[] | select([.status.conditions[] | select(.reason == \"MarkActiveRequest\")] | length == 0)]' | jq -r .[].metadata.name"
+
+
