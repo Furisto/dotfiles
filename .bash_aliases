@@ -11,4 +11,5 @@ source ~/system/.functions
 source ~/git/.functions
 
 source ~/kubernetes/.env
+source ~/system/.env
 source ~/git/.run
